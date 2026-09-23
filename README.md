@@ -2,7 +2,7 @@
 
 ## The Need for Order Matching in Modern Finanical Markets
 
-In a financial market with financial instruments, securities are traded with a buyer side and seller price. When they put their offers onto the market, they are willing to accept a range of prices above or below their acceptable limit. For a buyer, this limit is the bid price; for the seller, the ask price. There needs to exist infrastructure which matches these orders together and executes a trade satisfying the limits of both parties. A limit order book supports this, and one of the fundamentals of electronic trading in modern markets.
+In a financial market with financial instruments, securities are traded with a buyer side and seller price. When they put their offers onto the market, they are willing to accept a range of prices above or below their acceptable limit. For a buyer, this limit is the bid price; for the seller, the ask price. There needs to exist infrastructure which matches these orders together and executes a trade satisfying the limits of both parties. In times of old, a manual broker or trader would facilitate these trades manually, but in the 21st century, almost all trading is done electronically. This has birthed the modern quantitative trading market which is supported by many modern electronic trading platforms. A limit order book one of these fundamental platforms, and aims to automate and optimise what manual human brokers did in times of old.
 
 ## Limit Order Book in Summary
 
@@ -56,4 +56,4 @@ Hence, a trade will directly affect the resting state of the book and also the o
 
 ## Appendix
 
-Project will be mainly written in C++ running C++ 20 for now to get all of the major features of modern C++ without overcomplicating with gratuitous post modern features.
+Project will be mainly written in C++ running C++ 20 for now to get all of the major features of modern C++ without overcomplicating with gratuitous post modern features. There will be limited other languages here, but there may be supporting languages such as Make or Cmake, otherwise the project is to mainly develop fundamental C++ implementation skills.

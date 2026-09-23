@@ -1,5 +1,7 @@
 #include <string>
 
+// what other standard libraries do we need to include here?
+
 struct Time
 {
     int day {};
@@ -23,8 +25,19 @@ struct Trade
     Time date {};
 };
 
+struct Book
+{
+    
+}
+
+
 int main(void)
 {
 
+
+    addOrder(); // have the ability to add exactly one order to the book
+
     return 0; // for now unless specificed otherwise
 }
+
+void addOrder
