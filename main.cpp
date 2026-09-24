@@ -51,25 +51,24 @@ void addOrder(Book order_book)
     // if run out of space resize the resting orders of an order book to be slightly larger than it's existing capacity to make space for the new order
     order_book.resting_orders.resize(1);
 
-    // create new order variable
-
     static long ID {0};
 
     Order new_order {};
 
     new_order.ID = ID++;
 
-    // need string literal here but not variable I think
-
     std::cout << "Is this a buy or sell order? Please enter b/s for buy/sell respectively." << "\n";
-
-    // should probably use a string variable here or maybe just a character variable
-
-    // need to actually retain all of this info so maybe put into the actual structure first
 
     std::cin >> new_order.side;
 
-    // price of per security (will ask for bid or ask price depending on before)
+    // could use only one recurring variable but fine for now at least
+    if (new_order.side == "b") {
+        std::cout << "Please enter the bid price at which this order is willing to be traded at." << "\n"; // bid is maximum price which buyer is willing to buy
+    } else if (new_order.side == "s"){
+        std::cout << "Please enter the ask price at which this order is willing to be traded at." << "\n"; // ask price is min price which seller is willing to sell
+    }    
+    
+    std::cin >> new_order.price;
 
     // time of order placed
 
