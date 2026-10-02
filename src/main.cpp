@@ -95,7 +95,6 @@ void addOrder(Book* p_order_book) // setup must be to pass pointer to an order b
     // for now just always return a successful exit code using a void function
 }
 
-
 /*
 
 */
