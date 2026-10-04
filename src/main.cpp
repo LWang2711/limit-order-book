@@ -37,10 +37,6 @@ int main(void)
 
     addOrder(&order_book); // have the ability to add exactly one order to the book
 
-    printResting(&order_book); // have the ability to print exactly the first resting order in the book
-
-    // this should not work or cause undefined behaviour
-
     // need to make 2 things: 
         //addOrder needs to resize to one bigger for now is fine
         //printResting need to be able to print the first two at least 
@@ -104,19 +100,18 @@ void addOrder(Book* p_order_book) // setup must be to pass pointer to an order b
 
     // since is zero indexed I think
 
-    p_order_book->resting_orders[curr_resting_size - 1] = new_order; // hard coded for now
+    p_order_book->resting_orders[curr_resting_size] = new_order; // curr_resting_size is only fixed the next time around
 
     // for now just always return a successful exit code using a void function
 }
 
-/*
 
-*/
-void printResting(Book* p_order_book)
+// the structure is that we have the ability to print out one order, then need to loop index through every other order to print it out, so maybe
+// a helper function is needed first for printing out just one order
+
+void printOrder(Book* p_order_book, int order_ind)
 {
-    // there is going to be some repetition in getting the current size of the 
-
-    auto target_order = (p_order_book->resting_orders[0]);
+    auto target_order = (p_order_book -> resting_orders[order_ind]); // using the order which is specified
 
     // make the heading display the current time later on
     std::cout << "Here are the details of all resting orders on the book as at the current time." << "\n";
@@ -152,4 +147,18 @@ void printResting(Book* p_order_book)
     // then format it as put time which should be an unspecified type
 
     std::cout << "The time at which this order was placed was: " << std::put_time(&format_time, "%c") << "\n";
+}
+
+void printResting(Book* p_order_book)
+{
+    // there is going to be some repetition in getting the current size of the order book
+
+   int curr_resting_size = p_order_book -> resting_orders.size();
+
+    // what does this need to do? -> loop the print singualr order function for all of the orders
+    for (int i = 0; i < curr_resting_size; i++) {
+
+        printOrder(p_order_book, i);
+
+    }
 }
