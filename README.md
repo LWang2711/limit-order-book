@@ -18,7 +18,7 @@ Since quantities will not match perfectly, orders may rest in the book not fully
 
 The limit order book must be able to intake bid and ask orders from buyers and sellers respectively. These orders are to sit in the book where they are said to be at rest. When a match is found, the highest bid-ask spread or tie broken via FIFO order will be fulfilled, where then the book will move onto the next order or the same order in likely case that the quantity cannot be fully filled.
 
-There must also be cancel functionality, meaning that a buyer or seller must be able to cancel their order, trashing it and taking it off the rest portion of the book. Note that an order in a trade can clearly not be cancelled, except in the case of cancelling partial trades which may be added later.
+There must also be cancel functionality (although not in the very first prototype), meaning that a buyer or seller must be able to cancel their order, trashing it and taking it off the rest portion of the book. Note that an order in a trade can clearly not be cancelled, except in the case of cancelling partial trades which may be added later.
 
 The book will have two main functions, displaying the state of the book and displaying the trades which have already been executed. So the book must be able to know which resting orders are currently in the book, and the history of all trades which have occured. Including the orders within each trade by ID number and the price and quantity.
 

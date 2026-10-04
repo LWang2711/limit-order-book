@@ -39,20 +39,32 @@ int main(void)
 
     printResting(&order_book); // have the ability to print exactly the first resting order in the book
 
-    // local controlled test
+    // this should not work or cause undefined behaviour
 
+    // need to make 2 things: 
+        //addOrder needs to resize to one bigger for now is fine
+        //printResting need to be able to print the first two at least 
 
+    addOrder(&order_book); // just replaced it since it's hard coded for now
 
+    printResting(&order_book); // only prints the first one
 
     return 0; // for now unless specificed otherwise
 }
 
 void addOrder(Book* p_order_book) // setup must be to pass pointer to an order book
 {
-    // check if run out of space first before resizing the vector
+    // check if run out of space first before resizing the vector at a later stage tbh
 
     // if run out of space resize the resting orders of an order book to be slightly larger than it's existing capacity to make space for the new order
-    p_order_book->resting_orders.resize(1); // hard coded for now, also derefence pointer to get what is actually at that address
+    
+    // resize resting orders to exactly one larger than the current size of resting orders
+
+    // need to get the size of the vector of the order book -> use the std size or the vector method size
+
+    int curr_resting_size = p_order_book -> resting_orders.size(); // so is int or got narrowed? check documentation later
+
+    p_order_book -> resting_orders.resize(curr_resting_size + 1); // works for now by resizing
 
     static long ID {0};
 
@@ -90,7 +102,9 @@ void addOrder(Book* p_order_book) // setup must be to pass pointer to an order b
 
     // add this order to the new first slot of the book's resting place
 
-    p_order_book->resting_orders[0] = new_order; // hard coded for now
+    // since is zero indexed I think
+
+    p_order_book->resting_orders[curr_resting_size - 1] = new_order; // hard coded for now
 
     // for now just always return a successful exit code using a void function
 }
@@ -100,6 +114,8 @@ void addOrder(Book* p_order_book) // setup must be to pass pointer to an order b
 */
 void printResting(Book* p_order_book)
 {
+    // there is going to be some repetition in getting the current size of the 
+
     auto target_order = (p_order_book->resting_orders[0]);
 
     // make the heading display the current time later on
@@ -109,9 +125,9 @@ void printResting(Book* p_order_book)
     std::cout << "Order ID: " << std::to_string(target_order.ID) << "\n";
 
     if (target_order.side == "b") {
-        std::cout << "Order type: buy order" << std::to_string(target_order.quantity) << "\n";
+        std::cout << "Order type: buy order" << "\n";
     } else if (target_order.side == "s") {
-        std::cout << "Order type: sell order" << std::to_string(target_order.quantity) << "\n";
+        std::cout << "Order type: sell order" << "\n";
     }
 
     std::cout << "Price per unit: $" << std::to_string(target_order.price) << "\n";
