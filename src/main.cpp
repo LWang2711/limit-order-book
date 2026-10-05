@@ -4,7 +4,6 @@
 #include <chrono>
 #include <iomanip>
 
-// this is already becoming a mess, we might need to use headers and helper source files earlier than I thought
 
 struct Order
 {
@@ -12,7 +11,7 @@ struct Order
     std::string side {};
     float price {};
     long quantity {};
-    std::chrono::system_clock::time_point time {}; // part of chrono scope, and system clock scope with type time_point
+    std::chrono::system_clock::time_point time {}; 
 };
 
 struct Trade
@@ -35,38 +34,49 @@ int main(void)
 {
     Book order_book {};
 
-    addOrder(&order_book); // have the ability to add exactly one order to the book
+    // ask the user what operation would they like to undertake today?
 
-    // need to make 2 things: 
-        //addOrder needs to resize to one bigger for now is fine
-        //printResting need to be able to print the first two at least 
+    while (true) 
+    {
+        std::cout << "What operation would you like to perform today?" << "\n";
 
-    addOrder(&order_book); // just replaced it since it's hard coded for now
+        // need to make this caps proof
 
-    printResting(&order_book); // only prints the first one
+        std::cout << "Press \"O\" to create a new order" << "\n";
 
-    return 0; // for now unless specificed otherwise
+        std::cout << "Press \"E\" to exit" << "\n";
+
+        std::string command {};
+
+        std::cin >> command;
+
+        if (command == "E") {break;}
+    }
+
+    addOrder(&order_book); 
+
+    addOrder(&order_book);
+
+    printResting(&order_book);
+
+    return 0; // return proper error message
 }
 
-void addOrder(Book* p_order_book) // setup must be to pass pointer to an order book
+void addOrder(Book* p_order_book) 
 {
     // check if run out of space first before resizing the vector at a later stage tbh
 
-    // if run out of space resize the resting orders of an order book to be slightly larger than it's existing capacity to make space for the new order
-    
-    // resize resting orders to exactly one larger than the current size of resting orders
+    // if run out of space resize the resting orders of an order book to be slightly larger than it's existing capacity to make space for the new order via assert
 
-    // need to get the size of the vector of the order book -> use the std size or the vector method size
+    int curr_resting_size = p_order_book -> resting_orders.size(); // how does the int narrowing work here
 
-    int curr_resting_size = p_order_book -> resting_orders.size(); // so is int or got narrowed? check documentation later
-
-    p_order_book -> resting_orders.resize(curr_resting_size + 1); // works for now by resizing
+    p_order_book -> resting_orders.resize(curr_resting_size + 1); // resize to exactly only one size bigger for now
 
     static long ID {0};
 
     Order new_order {};
 
-    new_order.ID = ++ID; // needs to be pre-decrement
+    new_order.ID = ++ID; // get to 
 
     // need to add terminal input safe guards for all of these
 
@@ -74,7 +84,8 @@ void addOrder(Book* p_order_book) // setup must be to pass pointer to an order b
 
     std::cin >> new_order.side;
 
-    // could use only one recurring variable string variable and a format string but fine for now
+    // replace with string variable
+
     if (new_order.side == "b") {
         std::cout << "Please enter the bid price at which this order is willing to be traded at." << "\n"; // bid is maximum price which buyer is willing to buy
     } else if (new_order.side == "s"){
@@ -83,7 +94,8 @@ void addOrder(Book* p_order_book) // setup must be to pass pointer to an order b
     
     std::cin >> new_order.price;
 
-    // replace with format string if wanted as above
+    // replace with same string variable 
+
     if (new_order.side == "b") {
         std::cout << "Please enter the number of units you would like to buy." << "\n";
     } else if (new_order.side == "s") {
@@ -92,31 +104,22 @@ void addOrder(Book* p_order_book) // setup must be to pass pointer to an order b
 
     std::cin >> new_order.quantity;
 
-    // get the time of when order is placed
 
     new_order.time = std::chrono::system_clock::now();
 
-    // add this order to the new first slot of the book's resting place
+    p_order_book->resting_orders[curr_resting_size] = new_order;
 
-    // since is zero indexed I think
-
-    p_order_book->resting_orders[curr_resting_size] = new_order; // curr_resting_size is only fixed the next time around
-
-    // for now just always return a successful exit code using a void function
+    // return successful exit code if adding an order is successful
 }
-
-
-// the structure is that we have the ability to print out one order, then need to loop index through every other order to print it out, so maybe
-// a helper function is needed first for printing out just one order
 
 void printOrder(Book* p_order_book, int order_ind)
 {
     auto target_order = (p_order_book -> resting_orders[order_ind]); // using the order which is specified
 
-    // make the heading display the current time later on
+    // make the heading display the current time form chrono format
+
     std::cout << "Here are the details of all resting orders on the book as at the current time." << "\n";
 
-    // some better way to loop through the whole order instead of one at a time later
     std::cout << "Order ID: " << std::to_string(target_order.ID) << "\n";
 
     if (target_order.side == "b") {
@@ -127,38 +130,36 @@ void printOrder(Book* p_order_book, int order_ind)
 
     std::cout << "Price per unit: $" << std::to_string(target_order.price) << "\n";
 
-    // this is some repetition again since should really just use some way to know which side is being ordered
+    // replace with string variable
+
     if (target_order.side == "b") {
         std::cout << "Total number of units that will be bought: " << std::to_string(target_order.quantity) << "\n";
     } else if (target_order.side == "s") {
         std::cout << "Total number of units that will be sold: " << std::to_string(target_order.quantity) << "\n";
     }
 
-    // we want to extract the 24 hour time, date, month, year
-
-    // get total time in seconds till epoch start
+    // get total time in seconds till start of epoch
 
     std::time_t raw_time = std::chrono::system_clock::to_time_t(target_order.time);
 
-    // get into local time format from seconds till epoch
+    // get into local time format from seconds till start of epoch
 
-    std::tm format_time = *std::localtime(&raw_time); // takes address of the raw time, and also returns an address
+    std::tm format_time = *std::localtime(&raw_time);
 
-    // then format it as put time which should be an unspecified type
+    // format as standard put time which allows to be printed out directly
 
     std::cout << "The time at which this order was placed was: " << std::put_time(&format_time, "%c") << "\n";
 }
 
 void printResting(Book* p_order_book)
 {
-    // there is going to be some repetition in getting the current size of the order book
+    // repetition to for getting the size of the resting part of order book
 
    int curr_resting_size = p_order_book -> resting_orders.size();
 
-    // what does this need to do? -> loop the print singualr order function for all of the orders
-    for (int i = 0; i < curr_resting_size; i++) {
-
-        printOrder(p_order_book, i);
+   for (int i = 0; i < curr_resting_size; i++) {
+    
+    printOrder(p_order_book, i);
 
     }
 }

@@ -8,6 +8,8 @@ In a financial market with financial instruments, securities are traded with a b
 
 A limit order book essentially matches sell and buy orders in chronological order which must satisfy the order price of both the seller and buyer. This means that the order will only be fulfilled if two sides can be fulfilled such that there is an overlap between the bid and ask price. Without finance terms, this means below the highest price that a buyer is willing to pay for a security and above the lowest price which a seller is willing to sell for, or the bid and ask overlap respectively. The overlap is called the bid-ask spread.
 
+It is somewhat important to know that the buyer of underlying securities bears the loss of the bid-ask spread, and hence the seller reaps the profit in equal amount. In our definition of a perfect market (assumptions to be deteremined later), a trade is a zero-sum game.
+
 Something which needs to be understood is that bid and asks will sit in the book, or called when an order rests in a book. So one party may put orders on the book and it will rest until filled by an opposite part where there is a positive bid-ask spread. No negative is allowed since the limit means that all order prices must be limited to below the bid and above the ask.
 
 There are many ways to match the actual orders themselves, we will use price-time priority order matching. Meaning that the order quantity will be matched based on the best bid-ask spread, and and the tie breaker in case of same bid-ask spread will be determined by FIFO system; first equivalent bid-ask spread order is fulfilled first. 
@@ -40,6 +42,7 @@ Hence, a trade will directly affect the resting state of the book and also the o
 - Trade
 - Book Resting state
 - Book history log
+- 
 
 ## Operations that are Required for V0
 
@@ -53,7 +56,19 @@ Hence, a trade will directly affect the resting state of the book and also the o
 - Partial order cancelling?
 - Multiple financial instruments.
 - Stop loss limits for traders.
+- Networking.
+- Multithreading.
+- Most if not all optimisation techniques.
 
 ## Appendix
 
 Project will be mainly written in C++ running C++ 20 for now to get all of the major features of modern C++ without overcomplicating with gratuitous post modern features. There will be limited other languages here, but there may be supporting languages such as Make or Cmake, otherwise the project is to mainly develop fundamental C++ implementation skills.
+
+Other from this, there may be certain other tooling parts like the following:
+
+- Make
+- CMake
+- Bash and Zsh shell
+- Shel script for error checking
+- Git and Github
+- lldb and Visual Studio Code debugging wrapper
