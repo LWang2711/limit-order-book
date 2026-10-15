@@ -1,15 +1,9 @@
-// these I think that for right now we can just leave alone
-
-// just use one header file for now which is for order and order book operations
-
-// what about all the the structs themselves and all the other setup
-
-// only this part should have be within main and everything else should all be within different header and implementation files
-
 #include <iostream>
-#include "book.hpp"
-#include "order.hpp"
-#include "trade.hpp"
+#include "../include/book.hpp"
+#include "../include/order.hpp"
+#include "../include/trade.hpp" // for the main implementation file, these must be actual header files themselves
+
+// make sure to have directory search functionality into make later on for readability
 
 int main(void)
 {
@@ -43,5 +37,3 @@ int main(void)
 
     return 0; // TODO: return proper error message and make sure that have successful exit code
 }
-
-// now how to make this all work and compile via headers and forward declarations

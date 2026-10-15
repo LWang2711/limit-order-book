@@ -3,9 +3,6 @@
 
 #include <vector>
 
-//#include "order.hpp"
-//#include "trade.hpp"
-
 struct Order;
 struct Trade;
 
