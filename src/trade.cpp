@@ -39,3 +39,5 @@ bool isValidTrade(Order new_order, Order old_order) // don't think that it matte
     // if the control path can make it past all invalid trade blocks, then there is a valid trade
     return true;
 }
+
+// need to recompile trade with a debug symbol

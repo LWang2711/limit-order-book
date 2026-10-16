@@ -5,21 +5,25 @@ build/limit-order-book : main.o book.o order.o trade.o
 
 # source file and also whatever header files need to be within the actual src file itself to ensure safety?
 
-# make sure to compile without linking here for each object file update
+# make sure to compile without linking here for each object file update for clarity and compile efficiency
 
 main.o : src/main.cpp include/book.hpp include/order.hpp include/trade.hpp
-	clang++ -c src/main.cpp
+	clang++ -g -c src/main.cpp -o main.o
 
 # each src into object file needs to also check for updates in the header files which it depends on
 
 book.o : src/book.cpp include/book.hpp include/order.hpp
-	clang++ -c src/book.cpp
+	clang++ -g -c src/book.cpp -o book.o
 
 order.o : src/order.cpp include/order.hpp include/book.hpp
-	clang++ -c src/order.cpp
+	clang++ -g -c src/order.cpp -o order.o
 
 trade.o : src/trade.cpp include/trade.hpp include/order.hpp
-	clang++ -c src/trade.cpp
+	clang++ -g -c src/trade.cpp -o trade.o
+
+# try this part first
 
 clean : 
 	rm main.o book.o order.o trade.o
+
+# just keep build for now I think is fine but also need to be able to make the build directory and clean it automatically later on

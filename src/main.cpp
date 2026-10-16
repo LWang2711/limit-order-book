@@ -31,9 +31,7 @@ int main(void)
         }
     }
 
-    printResting(&order_book);
-
-    isValidTrade(order_book.resting_orders[0], order_book.resting_orders[1]); // right since this uses valid trade or not, so this is part of trade functionality
+    isValidTrade(order_book.resting_orders[0], order_book.resting_orders[1]); // make sure that this returns true
 
     return 0; // TODO: return proper error message and make sure that have successful exit code
 }
